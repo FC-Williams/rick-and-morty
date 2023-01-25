@@ -1,6 +1,8 @@
+import ErrorHandler from "./Error";
 import Origin from "./Origin";
 
 export default class Character {
+    id: number;
     name: string;
     status: string;
     species: string;
@@ -10,6 +12,7 @@ export default class Character {
 
     constructor(
         character?: Character,
+        id: number = 0,
         name: string = '',
         status: string = '',
         species: string = '',
@@ -18,6 +21,7 @@ export default class Character {
         origin?: Origin
     ) {
         if (character) {
+            this.id = character.id;
             this.name = character.name;
             this.status = character.status;
             this.species = character.species;
@@ -25,6 +29,7 @@ export default class Character {
             this.image = character.image;
             this.origin = character.origin;
         } else {
+            this.id = id;
             this.name = name;
             this.status = status;
             this.species = species;
@@ -35,15 +40,33 @@ export default class Character {
     }
 
     public static async getAll() {
-        
-        const res = await fetch('https://rickandmortyapi.com/api/character')
+        const data = await fetch('https://rickandmortyapi.com/api/character')
             .then(response => response.json())
-            .then()
-            .catch(error => console.error(error));
 
-            const characters = res.results.map((character: Character) => new Character(character));
-            console.log(characters)
-            return characters;
+            if (data.error) {
+                throw new Error(data.error);
+            } else {
+                const characters = data.results.map((character: Character) => new Character(character));
+                return characters;
+            }
     }
 
-} 
+    public static async getByName(params:IParams) {
+
+        const data = await fetch(`https://rickandmortyapi.com/api/character/?name=${params.name}`)
+            .then(response => response.json())
+            .catch(error => { throw new Error(error) })
+
+            if (data.error) {
+                throw new ErrorHandler(data);
+            } else {
+                const characters = data.results.map((character: Character) => new Character(character));
+                return characters;
+            }
+    }
+
+}
+
+export interface IParams {
+    name: string;
+}

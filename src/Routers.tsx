@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes as Switch } from "react-router-dom";
-import Home from "./components/pages/Home";
+import ToggleColorMode from "./components/molecules/ToggleColorMode";
 
 const Routes = () => {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/" element={<Home/>} />
+          <Route path="/" element={<ToggleColorMode/>} />
           <Route path="*" element={<></>} />
         </Switch>
       </BrowserRouter>
