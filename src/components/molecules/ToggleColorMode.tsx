@@ -1,6 +1,5 @@
 import * as React from "react";
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import Icon from "@mdi/react";
 import { mdiThemeLightDark } from "@mdi/js";
@@ -27,13 +26,13 @@ function MyApp() {
       }}
     >
       <Grid item xs={12}>
-        Modo {theme.palette.mode == "light" ? "claro" : "oscuro"}
+        Modo {theme.palette.mode === "light" ? "claro" : "oscuro"}
         <IconButton
           sx={{ ml: 1 }}
           onClick={colorMode.toggleColorMode}
           color="inherit"
         >
-          {<Icon size={1} path={mdiThemeLightDark} color={theme.palette.mode == "light" ? "black" : "white"} />}
+          {<Icon size={1} path={mdiThemeLightDark} color={theme.palette.mode === "light" ? "black" : "white"} />}
         </IconButton>
       </Grid >
             <Grid item xs={12}>

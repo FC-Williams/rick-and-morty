@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const Information: React.FC<IInformationProps> = ({

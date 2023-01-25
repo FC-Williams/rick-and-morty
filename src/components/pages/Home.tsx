@@ -1,11 +1,10 @@
-import { Box, Grid, LinearProgress, Typography } from "@mui/material";
+import { Grid, LinearProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import Character from "../../classes/Character";
 import ErrorHandler from "../../classes/Error";
 import CharacterDetails from "../molecules/CharacterDetails";
 import ImageCard from "../molecules/ImageCard";
 import Searcher from "../molecules/Searcher";
-import ToggleColorMode from "../molecules/ToggleColorMode";
 
 const Home = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -23,7 +22,7 @@ const Home = () => {
   };
 
   const searchCharacters = async (value: string) => {
-    setLoading(true)
+    setLoading(true);
     setErrorMessage("");
     try {
       setCharacters(await Character.getByName({ name: value }));
@@ -35,51 +34,69 @@ const Home = () => {
         setErrorMessage("Ha ocurrido un error al consultar los datos");
       }
     } finally {
-        setLoading(false)
+      setLoading(false);
     }
   };
 
-  const onClickImage = (character: Character)=> {
+  const onClickImage = (character: Character) => {
     setCharacter(character);
     setOpenDetails(true);
-  }
+  };
 
   useEffect(() => {
     fetchAllCharacters();
   }, []);
 
   return (
-    <Grid container marginTop={5} 
-    >
-      <Grid item container spacing={2} direction ={"row"} justifyContent={"center"} alignItems= {"center"} marginBottom={5}>
+    <Grid container marginTop={5}>
+      <Grid
+        item
+        container
+        spacing={2}
+        direction={"row"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        marginBottom={5}
+      >
         <Grid item xs={6}>
           <Searcher
             onChange={(value) => searchCharacters(value)}
             onSubmit={(value) => searchCharacters(value)}
           />
-          {
-            loading ? <LinearProgress variant="indeterminate" /> : <></>
-          }
+          {loading ? <LinearProgress variant="indeterminate" /> : <></>}
         </Grid>
       </Grid>
-      <Grid item container xs={12} justifyContent={"center"} flexDirection={"row"}>
-        {
-            characters.length ?
-            <>
-                {
-                    characters.map((character, i) => (
-                        <Grid item xs={12} sm={2} margin={1} flexDirection={"row"}>
-                            <ImageCard key={character.id} character={characters[i]} onClick= {()=> onClickImage(character)}/>
-                        </Grid>
-                    ))
-                }
-            </> : <></>
-        }
+      <Grid
+        item
+        container
+        xs={12}
+        justifyContent={"center"}
+        flexDirection={"row"}
+      >
+        {characters.length ? (
+          <>
+            {characters.map((character, i) => (
+              <Grid item xs={12} sm={2} margin={1} flexDirection={"row"}>
+                <ImageCard
+                  key={character.id}
+                  character={characters[i]}
+                  onClick={() => onClickImage(character)}
+                />
+              </Grid>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </Grid>
 
-      {
-        openDetails && <CharacterDetails character={character} openDetails={openDetails} setOpenDetails={setOpenDetails} />
-      }
+      {openDetails && (
+        <CharacterDetails
+          character={character}
+          openDetails={openDetails}
+          setOpenDetails={setOpenDetails}
+        />
+      )}
 
       <Typography>{errorMessage}</Typography>
     </Grid>

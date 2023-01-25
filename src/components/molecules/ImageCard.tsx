@@ -32,7 +32,7 @@ const ImageCard: React.FC<IImageCard> = ({ character, onClick }) => {
         />
         <CardContent>
           <Typography gutterBottom variant="h6">
-            {shortText(character.name)} <Icon size={0.5} path={mdiCheckboxBlankCircle} color={character.status.toUpperCase() == 'ALIVE' ? "green" : character.status.toUpperCase() == 'DEAD' ? "red" : "#36718f"}></Icon>
+            {shortText(character.name)} <Icon size={0.5} path={mdiCheckboxBlankCircle} color={character.status.toUpperCase() === 'ALIVE' ? "green" : character.status.toUpperCase() === 'DEAD' ? "red" : "#36718f"}></Icon>
             <Typography variant="caption">  {character.status}</Typography>
           </Typography>
 
